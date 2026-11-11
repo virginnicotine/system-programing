@@ -3,6 +3,7 @@ extern _printf
 
 section .text
 _main:
+    lea r8, [rel array]
     mov ecx, 9
 
 .outer_loop:
@@ -13,14 +14,14 @@ _main:
     cmp edx, ecx
     jge .inner_done       ; JGE: SF = OF, индекс >= границы
 
-    mov eax, [rel array + rdx * 4]
-    mov esi, [rel array + rdx * 4 + 4]
+    mov eax, [r8 + rdx * 4]
+    mov esi, [r8 + rdx * 4 + 4]
 
     cmp eax, esi
     jle .no_swap          ; JLE: ZF = 1 или SF != OF, левый <= правого
 
-    mov [rel array + rdx * 4], esi
-    mov [rel array + rdx * 4 + 4], eax
+    mov [r8 + rdx * 4], esi
+    mov [r8 + rdx * 4 + 4], eax
     mov ebx, 1            ; Был обмен
 
 .no_swap:
