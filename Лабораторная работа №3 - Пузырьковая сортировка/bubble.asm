@@ -3,40 +3,40 @@ extern _printf
 
 section .text
 _main:
-    lea r8, [rel array]
     mov ecx, 9
 
 .outer_loop:
+    lea r8, [rel array]
     xor ebx, ebx
     xor edx, edx
 
 .inner_loop:
     cmp edx, ecx
-    jge .inner_done       ; JGE: SF = OF, индекс >= границы
+    jge .inner_done       ; JGE: SF = OF, проход завершён
 
-    mov eax, [r8 + rdx * 4]
-    mov esi, [r8 + rdx * 4 + 4]
+    mov eax, [r8]
+    mov esi, [r8 + 4]
 
     cmp eax, esi
     jle .no_swap          ; JLE: ZF = 1 или SF != OF, левый <= правого
 
-    mov [r8 + rdx * 4], esi
-    mov [r8 + rdx * 4 + 4], eax
+    mov [r8], esi
+    mov [r8 + 4], eax
     mov ebx, 1            ; Был обмен
 
 .no_swap:
+    add r8, 4
     inc edx
-    jmp .inner_loop       ; Безусловный переход, флаги не проверяются
+    jmp .inner_loop       ; Безусловный переход
 
 .inner_done:
     cmp ebx, 0
     je .done              ; JE: ZF = 1, обменов не было
 
     dec ecx
-    jg .outer_loop        ; JG: ZF = 0 и SF = OF, граница > 0
+    jg .outer_loop        ; JG: ZF = 0 и SF = OF, проходы ещё нужны
 
 .done:
-    ; Выводим отсортированный массив
     push r12
     push r13
     sub rsp, 8
