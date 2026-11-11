@@ -14,7 +14,9 @@ _main:
     lea rdi, [rel format_str]
     mov esi, eax
     xor eax, eax
+    sub rsp, 8             ; Выравниваем стек перед вызовом функции
     call _printf
+    add rsp, 8             ; Восстанавливаем стек
 
     ; Завершение программы
     xor eax, eax
