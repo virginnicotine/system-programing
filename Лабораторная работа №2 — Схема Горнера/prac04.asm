@@ -3,22 +3,22 @@ extern _printf
 
 section .text
 _main:
-    ; Вычисляем (a * x + b) * x + c
-    mov eax, [rel a]       ; Загружаем a
-    imul eax, [rel x]      ; a * x
-    add eax, [rel b]       ; a * x + b
-    imul eax, [rel x]     ; (a * x + b) * x
-    add eax, [rel c]       ; (a * x + b) * x + c
+    ; Считаем выражение по схеме Горнера
+    mov eax, [rel a]
+    imul eax, [rel x]
+    add eax, [rel b]
+    imul eax, [rel x]
+    add eax, [rel c]
 
-    ; Выводим результат
+    ; Выводим ответ
     lea rdi, [rel format_str]
     mov esi, eax
     xor eax, eax
-    sub rsp, 8             ; Выравниваем стек перед вызовом функции
+    sub rsp, 8
     call _printf
-    add rsp, 8             ; Восстанавливаем стек
+    add rsp, 8
 
-    ; Завершение программы
+    ; Завершаем программу
     xor eax, eax
     ret
 
