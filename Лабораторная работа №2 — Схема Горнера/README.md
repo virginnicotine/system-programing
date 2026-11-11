@@ -25,6 +25,6 @@
 
 ```bash
 nasm -f macho64 prac04.asm -o prac04.o
-clang -arch x86_64 prac04.o -o prac04 -lSystem
+clang -arch x86_64 prac04.o -o prac04
 ./prac04
 ```
