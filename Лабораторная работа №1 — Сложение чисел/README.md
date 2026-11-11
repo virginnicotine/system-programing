@@ -12,7 +12,7 @@
 **Сборка и запуск на macOS:**
 ```bash
 nasm -f macho64 sur.asm -o sur.o
-clang -arch x86_64 sur.o -o sur
+clang -arch x86_64 sur.o -o sur -Wl,-ld_classic
 ./sur
 ```
 
